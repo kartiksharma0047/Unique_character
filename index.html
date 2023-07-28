@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Character Name</title>
+</head>
+
+<body>
+    <div>
+        <input type="text" placeholder="Enter a name">
+        <select name="numberSelect" id="numberSelect">
+            <option value="">Pick A Number</option>
+        </select>
+        <button>Get Random Character</button>
+        <p></p>
+    </div>
+    <script>
+        let input = document.querySelector("input");
+        let select = document.querySelector("select");
+        let btn = document.querySelector("button");
+        let show = document.querySelector("p");
+
+        input.onblur = () => {
+            for (let i = 1; i < input.value.length; i++) {
+                let opt = document.createElement("option");
+                opt.innerHTML = i;
+                select.append(opt);
+            }
+        }
+
+        function getNew_arr(name, limit) {
+            let Old_arr = [];
+            for (let i = 0; i < name.length; i++) {
+                if (!Old_arr.includes(name[i])) {
+                    Old_arr.push(name[i]);
+                }
+            }
+            let New_arr = [];
+            while (New_arr.length < limit && Old_arr.length > 0) {
+                let randomIndex = Math.floor(Math.random() * Old_arr.length);
+                New_arr.push(Old_arr.splice(randomIndex, 1)[0]);
+            }
+            return New_arr.join('');
+        }
+
+        btn.onclick = () => {
+            show.innerHTML = "";
+            let selected = select.value;
+            if (selected > 0) {
+                let val = input.value;
+                let randomChars = getNew_arr(val, selected);
+                show.innerHTML = randomChars;
+            } else {
+                show.innerHTML = "Pick A Number";
+            }
+        }
+    </script>
+</body>
+
+</html>
